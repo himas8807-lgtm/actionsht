@@ -44,7 +44,7 @@ jobs:
           echo "TARGETING: $WEEK"
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-      - name: 🔄 Run Shards (0-9)
+      - name: 🔄 Run Shards (0-19)
         env:
           EDGE_URL: https://xyivyebbafqwthvlwzlm.supabase.co/functions/v1/arirang-btsbackend
           ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
@@ -53,31 +53,30 @@ jobs:
         run: |
           TOTAL_OK=0
           TOTAL_FAIL=0
-          
-          # 10 Shards ensures that if you have 500 members, 
-          # each shard only processes ~50 members at a time.
-          for SHARD in 0 1 2 3 4 5 6 7 8 9; do
-            echo "::group::🔄 Processing Shard $SHARD/10"
-            
+
+          # 20 shards — ~8-9 agents per shard to stay within Supabase worker memory limits
+          for SHARD in 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19; do
+            echo "::group::🔄 Processing Shard $SHARD/20"
+
             # We add runAggregation=false here because we run a final big aggregation at the end
             RESP=$(curl -s --max-time 180 -X POST "$EDGE_URL" \
               -H "Content-Type: application/json" \
               -H "Authorization: Bearer $ANON_KEY" \
               -H "apikey: $ANON_KEY" \
-              -d "{\"action\":\"initiateFairSyncShard\",\"adminKey\":\"$ADMIN_KEY\",\"week\":\"$WEEK\",\"shard\":$SHARD,\"totalShards\":10,\"runAggregation\":false}")
-            
+              -d "{\"action\":\"initiateFairSyncShard\",\"adminKey\":\"$ADMIN_KEY\",\"week\":\"$WEEK\",\"shard\":$SHARD,\"totalShards\":20,\"runAggregation\":false}")
+
             echo "$RESP" | jq .
-            
+
             OK=$(echo "$RESP" | jq -r '.completed // 0')
             FAIL=$(echo "$RESP" | jq -r '.failed // 0')
             TOTAL_OK=$((TOTAL_OK + OK))
             TOTAL_FAIL=$((TOTAL_FAIL + FAIL))
-            
+
             echo "✅ Shard $SHARD Result: $OK Success, $FAIL Failed"
             echo "::endgroup::"
-            
-            # Wait 8 seconds between shards to let the DB and Last.fm API breathe
-            sleep 8
+
+            # 5s between shards — lighter per shard so less breathing room needed
+            sleep 5
           done
           
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
