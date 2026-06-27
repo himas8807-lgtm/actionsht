@@ -1,0 +1,113 @@
+name: ⛵ Arirang Mission Hourly Sync
+
+on:
+  schedule:
+    # Runs at the start of every hour
+    - cron: '0 * * * *'
+  workflow_dispatch:
+    # Allows manual trigger from GitHub UI
+    inputs:
+      week:
+        description: 'Manual Week Label (e.g., Week 1)'
+        required: false
+        default: ''
+
+jobs:
+  sync:
+    name: 🔄 Sequential Shard Sync
+    runs-on: ubuntu-latest
+    timeout-minutes: 30 # Increased time for 500 members
+    
+    steps:
+      - name: 📅 Determine Active Week
+        id: week
+        env:
+          EDGE_URL: https://xyivyebbafqwthvlwzlm.supabase.co/functions/v1/arirang-btsbackend
+          ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          # Fetch current week from backend
+          RESP=$(curl -s --max-time 30 -X POST "$EDGE_URL" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $ANON_KEY" \
+            -H "apikey: $ANON_KEY" \
+            -d '{"action":"getCurrentWeek"}')
+          
+          WEEK=$(echo "$RESP" | jq -r '.week // "Week 1"')
+          
+          # Use manual input if provided
+          if [ -n "${{ github.event.inputs.week }}" ]; then 
+            WEEK="${{ github.event.inputs.week }}"; 
+          fi
+          
+          echo "week=$WEEK" >> $GITHUB_OUTPUT
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "TARGETING: $WEEK"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+      - name: 🔄 Run Shards (0-9)
+        env:
+          EDGE_URL: https://xyivyebbafqwthvlwzlm.supabase.co/functions/v1/arirang-btsbackend
+          ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          ADMIN_KEY: ${{ secrets.SYNC_ADMIN_KEY }}
+          WEEK: ${{ steps.week.outputs.week }}
+        run: |
+          TOTAL_OK=0
+          TOTAL_FAIL=0
+          
+          # 10 Shards ensures that if you have 500 members, 
+          # each shard only processes ~50 members at a time.
+          for SHARD in 0 1 2 3 4 5 6 7 8 9; do
+            echo "::group::🔄 Processing Shard $SHARD/10"
+            
+            # We add runAggregation=false here because we run a final big aggregation at the end
+            RESP=$(curl -s --max-time 180 -X POST "$EDGE_URL" \
+              -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $ANON_KEY" \
+              -H "apikey: $ANON_KEY" \
+              -d "{\"action\":\"initiateFairSyncShard\",\"adminKey\":\"$ADMIN_KEY\",\"week\":\"$WEEK\",\"shard\":$SHARD,\"totalShards\":10,\"runAggregation\":false}")
+            
+            echo "$RESP" | jq .
+            
+            OK=$(echo "$RESP" | jq -r '.completed // 0')
+            FAIL=$(echo "$RESP" | jq -r '.failed // 0')
+            TOTAL_OK=$((TOTAL_OK + OK))
+            TOTAL_FAIL=$((TOTAL_FAIL + FAIL))
+            
+            echo "✅ Shard $SHARD Result: $OK Success, $FAIL Failed"
+            echo "::endgroup::"
+            
+            # Wait 8 seconds between shards to let the DB and Last.fm API breathe
+            sleep 8
+          done
+          
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "📊 FINAL SYNC STATS"
+          echo "✅ Total Synced: $TOTAL_OK"
+          echo "❌ Total Failed: $TOTAL_FAIL"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+      - name: 📉 Final Team Aggregation
+        env:
+          EDGE_URL: https://xyivyebbafqwthvlwzlm.supabase.co/functions/v1/arirang-btsbackend
+          ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          ADMIN_KEY: ${{ secrets.SYNC_ADMIN_KEY }}
+          WEEK: ${{ steps.week.outputs.week }}
+        run: |
+          echo "📊 Calculating Team Totals and XP..."
+          curl -s --max-time 120 -X POST "$EDGE_URL" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $ANON_KEY" \
+            -H "apikey: $ANON_KEY" \
+            -d "{\"action\":\"runAggregationOnly\",\"adminKey\":\"$ADMIN_KEY\",\"week\":\"$WEEK\"}" | jq .
+
+      - name: 🧹 Maintenance
+        env:
+          EDGE_URL: https://xyivyebbafqwthvlwzlm.supabase.co/functions/v1/arirang-btsbackend
+          ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          echo "🧹 Cleaning up heartbeat data..."
+          curl -s -X POST "$EDGE_URL" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $ANON_KEY" \
+            -H "apikey: $ANON_KEY" \
+            -d '{"action":"cleanupOnlineUsers"}' | jq .
