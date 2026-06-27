@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080810">
+  <title>Offline | HopeTracker</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #080810;
+      color: #f0eef5;
+      font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 24px;
+    }
+    .icon { font-size: 3rem; margin-bottom: 16px; }
+    h1 {
+      font-size: 1.4rem;
+      letter-spacing: 0.12em;
+      color: #e83a5d;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    p {
+      font-size: 0.95rem;
+      color: #9994b0;
+      max-width: 280px;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    button {
+      background: transparent;
+      border: 1px solid #e83a5d;
+      color: #e83a5d;
+      padding: 10px 28px;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    button:hover { background: rgba(232,58,93,0.1); }
+  </style>
+</head>
+<body>
+  <div class="icon">📡</div>
+  <h1>Signal Lost</h1>
+  <p>You're offline. Check your connection and try again to resume your mission.</p>
+  <button onclick="location.reload()">Reconnect</button>
+</body>
+</html>

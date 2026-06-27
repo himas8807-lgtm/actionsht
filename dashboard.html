@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#06060A">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="HopeTracker">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+    <link rel="icon" type="image/png" href="/icons/icon-192.png">
+    <title>ARIRANG MISSION</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&family=Inter:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=2026060212">
+</head>
+
+<body>
+
+    <!-- ══════════════════════════════════════════
+       MISSION LOCK OVERLAY
+       ══════════════════════════════════════════ -->
+    <div id="missionLock" class="mission-lock-overlay" style="display:none;">
+        <div class="lock-content">
+            <div class="lock-animation">
+                <div class="vinyl-record-lock">
+                    <div class="vinyl-grooves"></div>
+                    <div class="vinyl-label">
+                        <div class="label-inner">
+                            <div class="label-text">ARIRANG</div>
+                            <div class="label-year">1896</div>
+                            <div class="label-bts">BTS</div>
+                        </div>
+                    </div>
+                    <div class="vinyl-glow"></div>
+                    <div class="glow-rings">
+                        <div class="glow-ring ring-1"></div>
+                        <div class="glow-ring ring-2"></div>
+                        <div class="glow-ring ring-3"></div>
+                    </div>
+                    <div class="vinyl-needle"></div>
+                </div>
+            </div>
+
+            <div class="lock-message">
+                <h1 class="lock-title">🎬 THE ARIRANG MISSION</h1>
+                <p class="lock-subtitle">Begins March 22, 2026</p>
+
+                <div class="countdown-to-launch" id="launchCountdown"></div>
+
+                <div class="lock-info">
+                    <p class="info-text">
+                        Your registration is complete, Agent <span id="lockAgentNo">...</span>.<br>
+                        Mission briefing and dashboard access will unlock on launch day.
+                    </p>
+
+                    <div class="early-intel">
+                        <div class="intel-title">🔒 What's Coming:</div>
+                        <ul class="intel-list">
+                            <li>✓ 7 Team Battle System</li>
+                            <li>✓ Weekly Streaming Goals</li>
+                            <li>✓ ARIRANG 2X Challenge (28 streams/day)</li>
+                            <li>✓ Live Leaderboards & Rankings</li>
+                        </ul>
+                    </div>
+
+                    <div class="stay-ready">
+                        <p>📱 Open your DMs to receive team GC link on March 22nd</p>
+                        <p>🎵 Prepare your Spotify + Last.fm accounts</p>
+                        <p>💜 Get ready to SWIM</p>
+                    </div>
+                </div>
+
+                <button class="btn-outline" onclick="doLogout()" style="margin-top:24px;">
+                    ← Logout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+       LOADING SCREEN — "SWIM" Deep Ocean Intro
+       ══════════════════════════════════════════ -->
+    <div id="loading">
+        <div class="arirang-loading">
+
+            <div class="loading-particles">
+                <div class="l-particle" style="--x:15%;--y:20%;--delay:0s;--dur:3s;"></div>
+                <div class="l-particle" style="--x:75%;--y:15%;--delay:0.5s;--dur:2.5s;"></div>
+                <div class="l-particle" style="--x:40%;--y:80%;--delay:1s;--dur:3.5s;"></div>
+                <div class="l-particle" style="--x:85%;--y:60%;--delay:1.5s;--dur:2.8s;"></div>
+                <div class="l-particle" style="--x:25%;--y:70%;--delay:0.3s;--dur:3.2s;"></div>
+                <div class="l-particle" style="--x:60%;--y:30%;--delay:0.8s;--dur:2.6s;"></div>
+                <div class="l-particle" style="--x:50%;--y:50%;--delay:1.2s;--dur:3s;"></div>
+                <div class="l-particle" style="--x:90%;--y:85%;--delay:0.6s;--dur:2.9s;"></div>
+            </div>
+
+            <div class="vinyl-player">
+                <div class="ripple-container">
+                    <div class="ripple"></div>
+                    <div class="ripple"></div>
+                    <div class="ripple"></div>
+                </div>
+
+                <div class="vinyl-record">
+                    <div class="vinyl-grooves"></div>
+                    <div class="vinyl-label">
+                        <span class="vinyl-label-text">ARIRANG</span>
+                        <span class="vinyl-label-sub">BTS · 2026</span>
+                    </div>
+                    <div class="vinyl-shine"></div>
+                </div>
+
+                <div class="needle"></div>
+            </div>
+
+            <div class="logo-emerge">
+                <svg class="bts-logo" viewBox="0 0 100 40" aria-label="BTS">
+                    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"
+                        font-family="'Orbitron', sans-serif" font-size="24" fill="currentColor" font-weight="900">
+                        BTS
+                    </text>
+                </svg>
+                <div class="logo-subtitle">THE ARIRANG MISSION</div>
+            </div>
+
+            <div class="loading-wisdom" role="status" aria-live="polite">
+                <p class="wisdom-quote active" data-member="rm">
+                    "I hope this song reaches everyone who is doing their best in their own place."<br>
+                    <span class="wisdom-author">— RM</span>
+                </p>
+                <p class="wisdom-quote" data-member="jin">
+                    "Finding balance was precious and happy"<br>
+                    <span class="wisdom-author">— Jin</span>
+                </p>
+                <p class="wisdom-quote" data-member="suga">
+                    "The groove of this track is a kick"<br>
+                    <span class="wisdom-author">— SUGA</span>
+                </p>
+                <p class="wisdom-quote" data-member="jhope">
+                    "We poured all our positive energy"<br>
+                    <span class="wisdom-author">— j-hope</span>
+                </p>
+                <p class="wisdom-quote" data-member="jimin">
+                    "Like a current that never stops"<br>
+                    <span class="wisdom-author">— Jimin</span>
+                </p>
+                <p class="wisdom-quote" data-member="v">
+                    "We're swimming right next to you"<br>
+                    <span class="wisdom-author">— V</span>
+                </p>
+                <p class="wisdom-quote" data-member="jk">
+                    "I hope this feels like a gift"<br>
+                    <span class="wisdom-author">— Jung Kook</span>
+                </p>
+            </div>
+
+            <div class="ocean-waves">
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+            </div>
+
+            <div class="loading-bottom">
+                <div class="loading-status">ESTABLISHING CONNECTION...</div>
+                <div class="loading-progress">
+                    <div class="loading-progress-fill"></div>
+                </div>
+                <div class="loading-hint">Preparing your mission dashboard</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+       LOGIN SCREEN
+       ══════════════════════════════════════════ -->
+    <div id="loginOverlay">
+        <div class="record-grooves"></div>
+        <div class="swim-waves">
+            <div class="wave wave-1"></div>
+            <div class="wave wave-2"></div>
+        </div>
+
+        <div class="login-card archive-box">
+            <div class="tape-strip"></div>
+
+            <div class="logo-section">
+                <div class="arirang-logo-container">
+                    <img src="https://raw.githubusercontent.com/hbot7875-gif/btscomebackmission/main/arirang%20logo.jpg"
+                        alt="Logo" class="arirang-logo-img">
+                </div>
+
+                <h1 class="title">THE ARIRANG MISSION</h1>
+
+                <div class="hopetracker-divider">
+                    <span class="blur-line"></span>
+                    <span class="hopetracker-text">HOPETRACKER</span>
+                    <span class="blur-line line-right"></span>
+                </div>
+            </div>
+
+            <div class="login-box">
+                <div class="input-group">
+                    <label for="loginId">
+                        <span class="label-icon">🆔</span> AGENT IDENTIFICATION
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" id="loginId" placeholder="Enter Agent Number (e.g., AGENT001)"
+                            autocomplete="off" autocapitalize="characters">
+                        <span class="input-icon">👤</span>
+                    </div>
+                </div>
+
+                <div class="input-group" style="margin-top: 15px;">
+                    <label for="loginPw">
+                        <span class="label-icon">🔑</span> ACCESS KEY
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="password" id="loginPw" placeholder="Enter Password">
+                        <span class="input-icon">🔒</span>
+                    </div>
+                </div>
+
+                <button id="login-btn" class="btn-arirang" onclick="doLogin()" style="margin-top: 24px;">
+                    <span class="btn-text">AUTHENTICATE</span>
+                    <span class="btn-icon">→</span>
+                </button>
+
+                <div id="loginErr" class="error-msg"></div>
+
+                <div class="divider">
+                    <span class="divider-line"></span>
+                    <span class="divider-text">OR</span>
+                    <span class="divider-line"></span>
+                </div>
+
+                <div class="input-group">
+                    <label for="findIG">
+                        <span class="label-icon">📱</span> FIND AGENT ID
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" id="findIG" placeholder="Enter Instagram username..." autocomplete="off">
+                        <span class="input-icon">@</span>
+                    </div>
+                    <button id="find-btn" class="btn-swim" onclick="findAgent()">
+                        <span class="btn-text">LOOKUP ID</span>
+                        <span class="btn-icon">🔍</span>
+                    </button>
+                </div>
+                <div id="findResult" class="result-msg"></div>
+            </div>
+
+            <div class="login-footer">
+                <div class="connection-status">
+                    <div class="pulse-dot"></div>
+                    <span class="hope-text">SYSTEM ONLINE</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+       APP SHELL (Main Dashboard)
+       ══════════════════════════════════════════ -->
+    <div id="app" style="display:none;">
+
+        <div id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+        <!-- ══════ SIDEBAR ══════ -->
+        <nav class="sidebar" id="sidebar">
+
+            <div class="sb-brand">
+                <div style="flex:1;">
+                    <div class="sb-brand-title">ARIRANG MISSION</div>
+                    <div class="sb-brand-sub">BTS Comeback Operation</div>
+                </div>
+                <button class="sb-close-btn" id="sidebarCloseBtn" onclick="closeSidebar()"
+                    aria-label="Close menu">✕</button>
+            </div>
+
+            <div class="sidebar-scroll">
+
+                <div class="sb-agent-card" onclick="goTo('profile')">
+                    <div class="sb-agent-pfp" id="sbPfp">
+                        <!-- Circular Image and Online Dot Injected by JS -->
+                    </div>
+                    <div class="sb-agent-info">
+                        <div class="sb-agent-name" id="sbName">Agent</div>
+                        <div class="sb-agent-meta">
+                            <span class="sb-agent-team" id="sbTeam">—</span>
+                            <span class="sb-agent-meta-sep"></span>
+                            <span class="sb-agent-id" id="sbId">—</span>
+                        </div>
+                    </div>
+                    <span style="font-size:0.625rem;color:var(--text-ghost);">›</span>
+                </div>
+
+                <!-- Week selector -->
+                <div style="padding:0 4px;margin-bottom:12px;">
+                    <div class="label-tag" style="margin-bottom:4px;">Active Week</div>
+                    <select id="weekSelect" class="input-field" style="padding:8px 10px;font-size:0.6875rem;"></select>
+                </div>
+
+                <!-- Sync -->
+                <button class="btn-outline" id="syncBtn" onclick="syncData()"
+                    style="width:100%;margin-bottom:12px;font-size:0.625rem;">
+                    ⟳ Sync
+                </button>
+
+                <!-- NAV: MAIN -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Main</div>
+                    <div class="nav-item active" onclick="goTo('home')"><span class="nav-icon">🏠</span> Mission Control
+                    </div>
+                    <div class="nav-item" onclick="goTo('guide')"><span class="nav-icon">📚</span> Agent Manual</div>
+                    <div class="nav-item" onclick="goTo('profile')"><span class="nav-icon">📋</span> My Profile</div>
+                    <div class="nav-item" id="botzNavBtn" onclick="goToBotz()" style="display:none;"><span class="nav-icon">🎵</span> BOTZ</div>
+                    <div class="nav-item" onclick="goTo('badges')" style="position:relative;">
+                        <span class="nav-icon">🎖️</span> Badge Drawer
+                        <span id="badgeDrawerNewDot" style="display:none; position:absolute; right:10px; top:50%; transform:translateY(-50%); background:var(--red-core); color:#fff; font-size:8px; font-weight:900; letter-spacing:0.5px; padding:2px 6px; border-radius:10px; animation:pulseBorder 1.5s infinite; pointer-events:none;">NEW</span>
+                    </div>
+                </div>
+
+                <!-- NAV: MISSIONS -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Missions</div>
+
+                    <div class="nav-group-toggle" onclick="toggleNavGroup(this)">
+                        <span class="nav-icon">⚔️</span>
+                        <span>Daily Missions</span>
+                        <span class="nav-chevron">▶</span>
+                    </div>
+
+                    <div class="nav-group-body" id="navMissions">
+                        <div class="nav-item sub-item" onclick="goTo('trackgoals')"><span class="nav-icon">🎯</span>
+                            Track Goals</div>
+                        <div class="nav-item sub-item" onclick="goTo('albumgoals')"><span class="nav-icon">📀</span>
+                            Album Goals</div>
+                        <div class="nav-item sub-item" onclick="goTo('album2x')"><span class="nav-icon">💿</span>
+                            Arirang 2X</div>
+                        <div class="nav-item sub-item" onclick="goTo('unit')"><span class="nav-icon">⚡</span> Arirang
+                            Unit</div>
+                        <div class="nav-item sub-item" onclick="goTo('sidemissions')"><span class="nav-icon">🛡️</span>
+                            Side Missions</div>
+                        <div class="nav-item sub-item" onclick="goTo('attendance')"><span class="nav-icon">📋</span>
+                            Attendance</div>
+                        <div class="nav-item sub-item" onclick="goTo('police')"><span class="nav-icon">👮</span> Police
+                            Check</div>
+                    </div>
+
+                    <div class="nav-item" onclick="goTo('secretmissions')"><span class="nav-icon">🕵️</span> Secret
+                        Missions</div>
+                    <div class="nav-item" onclick="goTo('sotd')"><span class="nav-icon">🎬</span> Song of the Day</div>
+                    <div class="nav-item" onclick="goTo('hype')" style="border-left:2px solid #e83a5d; margin-top:4px;">
+                        <span class="nav-icon">🔥</span> Fan Hype Wall
+                    </div>
+                    <div class="nav-item" onclick="goTo('army')"
+                        style="border-left:2px solid var(--purple-core,#a78bfa); margin-top:4px;"><span
+                            class="nav-icon">💜</span> The 8th Mission</div>
+                </div>
+
+                <!-- NAV: INTEL -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Intel</div>
+                    <div class="nav-item" onclick="goTo('rankings')"><span class="nav-icon">🏆</span> Rankings</div>
+                    <div class="nav-item" onclick="goTo('halloffame')"><span class="nav-icon">🥇</span> Hall of Fame</div>
+                    <div class="nav-item" onclick="goTo('teams')"><span class="nav-icon">⚔️</span> Squad Standings</div>
+                    <div class="nav-item" onclick="goTo('hangar')"><span class="nav-icon">⛵</span> Magic Ship</div>
+                    <div class="nav-item" onclick="goTo('protocol148')"><span class="nav-icon">🧠</span> 148 Protocol
+                    </div>
+                    <div class="nav-item" onclick="goTo('operatives')"><span class="nav-icon">📂</span> Operative
+                        Database</div>
+                    <div class="nav-item" onclick="goTo('trainees')"><span class="nav-icon">🎓</span> Trainees</div>
+                    <div class="nav-item" onclick="goTo('comparison')"><span class="nav-icon">📈</span> Team Comparison
+                    </div>
+                </div>
+
+                <!-- NAV: COMMS -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Comms & Tools</div>
+                    <div class="nav-item" onclick="goTo('announcements')"><span class="nav-icon">📢</span> Announcements
+                    </div>
+                    <div class="nav-item" onclick="goTo('chat')"><span class="nav-icon">🎬</span> HT Wrapped</div>
+                    <div class="nav-item" onclick="goTo('gclinks')"><span class="nav-icon">👥</span> Group Chats</div>
+                    <div class="nav-item" onclick="goTo('playlists')"><span class="nav-icon">🎵</span> Playlists</div>
+                    <!-- BTS GAMES — not live yet
+                    <div class="nav-item" onclick="goTo('games')" style="border-left:2px solid var(--vinyl-gold);"><span class="nav-icon">🎮</span> BTS Games</div>
+                    -->
+                </div>
+
+                <!-- NAV: OPS ROOM -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Ops Room</div>
+                    <div class="nav-item" onclick="goTo('games')"><span class="nav-icon">🎮</span> AriGames</div>
+                </div>
+
+                <!-- NAV: REPORTS -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Reports</div>
+                    <div class="nav-item" onclick="goTo('summary')"><span class="nav-icon">📊</span> Weekly Results</div>
+                    <div class="nav-item" onclick="goTo('feed')"><span class="nav-icon">📡</span> Activity Feed</div>
+                </div>
+
+                <!-- Admin -->
+                <div class="nav-section" id="adminNav" style="display:none;">
+                    <div class="nav-section-title">Admin</div>
+                    <div class="nav-item" onclick="showAdminPanel()"><span class="nav-icon">🎛️</span> Mission Control
+                        Panel</div>
+                </div>
+
+            </div>
+
+            <!-- Push Alerts CTA -->
+            <div id="pushAlertsCTA" style="padding:8px 14px 4px;">
+                <button id="pushEnableBtn" onclick="handlePushToggle()" style="
+                    width:100%;
+                    background:linear-gradient(135deg,rgba(232,58,93,0.14) 0%,rgba(232,58,93,0.04) 100%);
+                    border:1px solid rgba(232,58,93,0.45);
+                    color:#e83a5d;
+                    padding:9px 12px;
+                    border-radius:8px;
+                    cursor:pointer;
+                    font-size:0.68rem;
+                    letter-spacing:0.08em;
+                    font-weight:600;
+                    text-align:center;
+                    transition:all 0.25s;
+                    display:block;
+                ">🔔 Enable Alerts</button>
+            </div>
+
+            <!-- Footer -->
+            <div class="sb-footer">
+                <div class="sb-online"><span id="onlineCount">0</span> agents online</div>
+                <button class="btn-ghost" onclick="doLogout()" style="color:var(--fail);font-size:0.625rem;">Logout
+                    →</button>
+            </div>
+
+        </nav>
+
+        <!-- ══════ MAIN CONTENT ══════ -->
+        <div class="main-content">
+
+            <!-- Mobile top bar -->
+            <div class="top-bar" id="topBar" style="padding: 14px 16px;">
+                <button class="top-bar-burger" onclick="openSidebar()" aria-label="Open menu">
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                </button>
+
+                <div
+                    style="display:flex; align-items:center; gap:10px; justify-content:center; flex:1; overflow:hidden;">
+                    <span class="top-bar-title" id="topBarTitle"
+                        style="font-size:0.9rem; font-weight:900; letter-spacing:3px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">
+                        THE ARIRANG MISSION
+                    </span>
+                </div>
+
+                <div style="display:flex;align-items:center;gap:6px;">
+                    <button class="btn-ghost" onclick="syncData()" style="font-size:1rem;padding:6px;">⟳</button>
+                    <button class="btn-ghost" onclick="showNotificationCenter()" style="font-size:1rem;padding:6px;"
+                        id="topBarNotif">🔔</button>
+                </div>
+            </div>
+
+            <div class="pages-wrapper">
+
+                <!-- ══ HOME ══ -->
+                <div class="page active" id="page-home">
+                    <div id="warnBanner" class="warn-banner" style="display:none;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                            <span style="font-size:0.75rem;font-weight:800;color:var(--fail);">⚠️ TEAM AT RISK</span>
+                            <span id="warnMsg" style="font-size:0.625rem;color:var(--text-muted);"></span>
+                        </div>
+                        <div class="pbar">
+                            <div class="pfill" id="warnFill" style="width:0%"></div>
+                        </div>
+                    </div>
+
+                    <div id="leaveBanner" class="leave-banner" style="display:none;">
+                        💤 GHOST PROTOCOL ACTIVE: MISSION EXEMPTION IN EFFECT
+                    </div>
+
+                    <div id="homeLoading" class="page-loading">
+                        <div class="spinner"></div>
+                    </div>
+                    <div id="homeContent" style="display:none; flex-direction: column; gap: 20px;">
+                    </div>
+                </div>
+
+                <!-- ══ PROFILE (CLEANED — NO DUPLICATE CARD) ══ -->
+                <div class="page" id="page-profile">
+                    <div class="page-header">
+                        <div class="page-title">📋 Agent Profile</div>
+                        <div class="page-subtitle">Your mission record and statistics</div>
+                    </div>
+
+                    <!-- Account Settings (Change Password) -->
+                    <div style="display:flex; justify-content:flex-end; margin-bottom: 16px;">
+                        <button class="btn-outline" onclick="openPasswordModal()"
+                            style="font-size: 10px; padding: 6px 12px; background: rgba(255,255,255,0.03);">
+                            🔑 Change Password
+                        </button>
+                    </div>
+
+                    <!-- Main Profile Content (Agent Card, Stats, Contributions, Badges, Leave, Retire injected here by JS) -->
+                    <div id="profileContent"></div>
+
+                    <!-- Career History -->
+                    <div class="wave-divider"></div>
+                    <div class="section-label">📊 Career History</div>
+                    <div id="profileCareer"></div>
+                </div>
+
+                <!-- ══ TRACK GOALS ══ -->
+                <div class="page" id="page-trackgoals">
+                    <div class="page-header mission-header" style="--mission-accent: #c4b5fd;">
+                        <div class="mission-header-top">
+                            <div class="mission-header-icon">🎯</div>
+                            <div class="mission-header-text">
+                                <div class="page-title">Track Goals</div>
+                                <div class="page-subtitle">Focus streams on your priority tracks</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="trackGoalsContent"></div>
+                </div>
+
+                <!-- ══ ALBUM GOALS ══ -->
+                <div class="page" id="page-albumgoals">
+                    <div class="page-header mission-header" style="--mission-accent: #34d399;">
+                        <div class="mission-header-top">
+                            <div class="mission-header-icon">📀</div>
+                            <div class="mission-header-text">
+                                <div class="page-title">Album Goals</div>
+                                <div class="page-subtitle">Stream the full ARIRANG album top-to-bottom</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="albumGoalsContent"></div>
+                </div>
+
+                <!-- ══ ARIRANG 2X ══ -->
+                <div class="page" id="page-album2x">
+                    <div class="page-header mission-header" style="--mission-accent: #f472b6;">
+                        <div class="mission-header-top">
+                            <div class="mission-header-icon">💿</div>
+                            <div class="mission-header-text">
+                                <div class="page-title">Arirang 2X</div>
+                                <div class="page-subtitle">14 tracks × 2 per day = 28 streams daily</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="album2xContent"></div>
+                </div>
+
+                <!-- ══ ARIRANG UNIT ══ -->
+                <div class="page" id="page-unit">
+                    <div class="page-header mission-header" style="--mission-accent: #60a5fa;">
+                        <div class="mission-header-top">
+                            <div class="mission-header-icon">⚡</div>
+                            <div class="mission-header-text">
+                                <div class="page-title">Arirang Unit</div>
+                                <div class="page-subtitle">Stream your team's assigned tracks hard</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="unitContent"></div>
+                </div>
+
+                <!-- ══ SIDE MISSIONS ══ -->
+                <div class="page" id="page-sidemissions">
+                    <div class="page-header mission-header" style="--mission-accent: #fcd34d;">
+                        <div class="mission-header-top">
+                            <div class="mission-header-icon">🛡️</div>
+                            <div class="mission-header-text">
+                                <div class="page-title">Side Missions</div>
+                                <div class="page-subtitle">4 tracks × 20 streams per week</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="smContent"></div>
+                </div>
+
+                <!-- ══ ATTENDANCE ══ -->
+                <div class="page" id="page-attendance">
+                    <div class="page-header mission-header" style="--mission-accent: #fbbf24;">
+                        <div class="mission-header-top">
+                            <div class="mission-header-icon">📋</div>
+                            <div class="mission-header-text">
+                                <div class="page-title">Attendance</div>
+                                <div class="page-subtitle">Upload your Spotify Recents daily</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="attendanceContent"></div>
+                </div>
+
+                <!-- ══ POLICE CHECK ══ -->
+                <div class="page" id="page-police">
+                    <div class="page-header mission-header" style="--mission-accent: #f87171;">
+                        <div class="mission-header-top">
+                            <div class="mission-header-icon">👮</div>
+                            <div class="mission-header-text">
+                                <div class="page-title">Police Check</div>
+                                <div class="page-subtitle">Keep the battle fair — report violations</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="policeContent"></div>
+                </div>
+
+                <!-- ══ RANKINGS ══ -->
+                <div class="page" id="page-rankings">
+                    <div class="page-header">
+                        <div class="page-title">🏆 Rankings</div>
+                        <div class="page-subtitle">Global agent leaderboard</div>
+                    </div>
+                    <div id="rankContent"></div>
+                </div>
+
+                <!-- ══ TEAMS (Squad Standings) ══ -->
+                <div class="page" id="page-teams">
+                    <div class="page-header">
+                        <div class="page-title">🏆 Squad Standings</div>
+                        <div class="page-subtitle">Overall rankings</div>
+                    </div>
+                    <div id="teamsContent"></div>
+                </div>
+
+                <!-- ══ MAGIC SHIP ══ -->
+                <div class="page" id="page-hangar">
+                    <div class="page-header">
+                        <div class="page-title">⛵ Magic Ship</div>
+                        <div class="page-subtitle">Your Team's Magic Ship</div>
+                    </div>
+                    <div id="magicShipContent"></div>
+                </div>
+
+                <!-- ══ OPERATIVES ══ -->
+                <div class="page" id="page-operatives">
+                    <div class="page-header">
+                        <div class="page-title">📂 Operative Database</div>
+                        <div class="page-subtitle">Full agent list</div>
+                    </div>
+                    <div id="operativesContent"></div>
+                </div>
+
+                <!-- ══ TRAINEES ══ -->
+                <div class="page" id="page-trainees">
+                    <div class="page-header">
+                        <div class="page-title">🎓 Trainees</div>
+                        <div class="page-subtitle">Agents currently in training</div>
+                    </div>
+                    <div id="traineesContent"></div>
+                </div>
+
+                <!-- ══ COMPARISON ══ -->
+                <div class="page" id="page-comparison">
+                    <div class="page-header">
+                        <div class="page-title">📈 Battle Statistics</div>
+                        <div class="page-subtitle">Relative XP progression analysis</div>
+                    </div>
+                    <div id="comparisonContent"></div>
+                </div>
+
+                <!-- ══ SECRET MISSIONS ══ -->
+                <div class="page" id="page-secretmissions">
+                    <div class="page-header">
+                        <div class="page-title">🕵️ Secret Missions</div>
+                        <div class="page-subtitle">Classified operations</div>
+                    </div>
+                    <div id="secretMissionsContent"></div>
+                </div>
+
+                <!-- ══ SOTD ══ -->
+                <div class="page" id="page-sotd">
+                    <div class="page-header">
+                        <div class="page-title">🎬 Song of the Day</div>
+                        <div class="page-subtitle">Identify for bonus XP</div>
+                    </div>
+                    <div id="sotdContent"></div>
+                </div>
+
+                <!-- ══ 148 PROTOCOL ══ -->
+                <div class="page" id="page-protocol148">
+                    <div class="page-header">
+                        <div class="page-title">🧠 148 Protocol</div>
+                        <div class="page-subtitle">RM's strategic analysis</div>
+                    </div>
+                    <div id="protocolContent"></div>
+                </div>
+
+                <!-- ══ PROTOCOL 8: ARMY MISSION ══ -->
+                <div class="page" id="page-army">
+                    <div class="page-header mission-header" style="--mission-accent:#a78bfa;">
+                        <div class="mission-header-top">
+                            <div class="mission-header-icon">💜</div>
+                            <div class="mission-header-text">
+                                <div class="page-title">The 8th Mission</div>
+                                <div class="page-subtitle">Calling the 8th Member — Cast your daily votes</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="armyContent"></div>
+                </div>
+
+                <!-- ══ BADGES ══ -->
+                <div class="page" id="page-badges">
+                    <div class="page-header">
+                        <div class="page-title">🎖️ Badge Drawer</div>
+                        <div class="page-subtitle">Your collection</div>
+                    </div>
+                    <div id="badgesContent"></div>
+                </div>
+
+                <!-- ══ CHAT ══ -->
+                <div class="page" id="page-chat">
+                    <div class="page-header mission-header" style="--mission-accent:#e83a5d;">
+                        <div class="mission-header-top">
+                            <div class="mission-header-icon">🎬</div>
+                            <div class="mission-header-text">
+                                <div class="page-title">HT Wrapped</div>
+                                <div class="page-subtitle">Mid-Season Mission Report</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="wrappedContent"></div>
+                </div>
+
+                <!-- ══ FAN HYPE WALL ══ -->
+                <div class="page" id="page-hype">
+                    <div class="page-header mission-header" style="--mission-accent:#e83a5d;">
+                        <div class="mission-header-top">
+                            <div class="mission-header-icon">🔥</div>
+                            <div class="mission-header-text">
+                                <div class="page-title">Fan Hype Wall</div>
+                                <div class="page-subtitle">Boost Agent Signals 📡</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="hypeContent"></div>
+                </div>
+
+
+                <!-- ══ GROUP CHATS ══ -->
+                <div class="page" id="page-gclinks">
+                    <div class="page-header">
+                        <div class="page-title">👥 Communication Hub</div>
+                        <div class="page-subtitle">Official Group Chat Links</div>
+                    </div>
+                    <div id="gclinksContent"></div>
+                </div>
+
+                <!-- ══ PLAYLISTS ══ -->
+                <div class="page" id="page-playlists">
+                    <div class="page-header">
+                        <div class="page-title">🎵 Playlists</div>
+                        <div class="page-subtitle">Official streaming playlists</div>
+                    </div>
+                    <div id="playlistsContent"></div>
+                </div>
+
+                <!-- ══ ANNOUNCEMENTS ══ -->
+                <div class="page" id="page-announcements">
+                    <div class="page-header">
+                        <div class="page-title">📢 Announcements</div>
+                        <div class="page-subtitle">Intel from HQ</div>
+                    </div>
+                    <div id="annsContent"></div>
+                </div>
+
+                <!-- ══ WEEKLY RESULTS ══ -->
+                <div class="page" id="page-summary">
+                    <div class="page-header">
+                        <div class="page-title">📊 Weekly Results</div>
+                        <div class="page-subtitle">Mission outcomes</div>
+                    </div>
+                    <div id="summaryContent"></div>
+                </div>
+
+                <!-- ══ FEED ══ -->
+                <div class="page" id="page-feed">
+                    <div class="page-header">
+                        <div class="page-title">📡 Activity Feed</div>
+                        <div class="page-subtitle">Live updates</div>
+                    </div>
+                    <div id="feedContent"></div>
+                </div>
+
+                <!-- ══ GUIDE ══ -->
+                <div class="page" id="page-guide">
+                    <div class="page-header">
+                        <div class="page-title">📚 Agent Manual</div>
+                        <div class="page-subtitle">Complete briefing</div>
+                    </div>
+                    <div id="guideContent"></div>
+                </div>
+
+                <!-- ══ BTS GAMES — not live yet ══
+                <div class="page" id="page-games">
+                    <div class="page-header mission-header" style="--mission-accent:var(--vinyl-gold);">
+                        <div class="mission-header-top">
+                            <div class="mission-header-icon">🎮</div>
+                            <div class="mission-header-text">
+                                <div class="page-title">BTS Games</div>
+                                <div class="page-subtitle">Real BTS data • Real fun</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="gamesContent"></div>
+                </div>
+
+                <!-- ══ HALL OF FAME ══ -->
+                <div class="page" id="page-halloffame">
+                    <div class="page-header mission-header" style="--mission-accent:var(--vinyl-gold);">
+                        <div class="mission-header-top">
+                            <div class="mission-header-icon">🏆</div>
+                            <div class="mission-header-text">
+                                <div class="page-title">Hall of Fame</div>
+                                <div class="page-subtitle">Weekly Battle Champions</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="hofContent" style="padding:16px;"></div>
+                </div>
+
+                <!-- ══ GAMES (ALL IN ONE) ══ -->
+                <div class="page" id="page-games">
+                    <div class="page-header mission-header" style="--mission-accent:#bf5af2;">
+                        <div class="mission-header-top">
+                            <div class="mission-header-icon">🎮</div>
+                            <div class="mission-header-text">
+                                <div class="page-title">AriGames</div>
+                                <div class="page-subtitle">Every track tells a story. Every game brings it to life.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding:16px; display:flex; flex-direction:column; gap:0;">
+
+                        <!-- ─── GAME 1: ARIRANG SOS ─── -->
+                        <div style="padding-bottom:20px;">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                                <span style="font-size:22px;">🚨</span>
+                                <div>
+                                    <div style="font-size:14px;font-weight:900;color:#fff;letter-spacing:0.5px;">Pop Out</div>
+                                    <div style="font-size:10px;color:var(--text-muted);">All-teams stream mission — every scrobble counts</div>
+                                </div>
+                            </div>
+                            <div style="padding:10px 14px;margin-bottom:10px;border-left:3px solid var(--fail);background:rgba(232,58,93,0.05);border-radius:0 6px 6px 0;">
+                                <div style="font-size:9px;font-weight:800;color:var(--fail);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;">How to Play</div>
+                                <div style="font-size:10px;color:var(--text-muted);line-height:1.7;">HQ drops a Pop Out — one song or album to spin, on the clock (usually 6h). Hit <strong style="color:#fff;">Join</strong> and stream it with every other team. The moment the squad smashes the goal, a <strong style="color:var(--vinyl-gold);">🔮 Magic Box</strong> bursts open for everyone who joined — <strong style="color:#fff;">surprise rewards inside!</strong> 🎁 Get <strong style="color:#fff;">at least 7 streams</strong> in to claim yours. Beat the clock! 🎯💜</div>
+                            </div>
+                            <div id="flashBountiesContent"></div>
+                            <button type="button" onclick="showPopOutHallOfFame()"
+                                style="width:100%;margin-top:10px;padding:9px;background:rgba(231,197,96,0.06);
+                                border:1px solid rgba(231,197,96,0.3);border-radius:10px;color:var(--vinyl-gold);
+                                font-size:11px;font-weight:800;letter-spacing:0.5px;cursor:pointer;">
+                                🏆 Golden Vinyl — Hall of Fame
+                            </button>
+                        </div>
+
+                        <div style="border-top:1px solid var(--border-subtle);margin-bottom:20px;"></div>
+
+                        <!-- ─── GAME 2: ALIENS (Friday Mafia Game) ─── -->
+                        <div id="aliensSection" style="padding-bottom:20px;">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                                <span style="font-size:22px;">🛸</span>
+                                <div style="flex:1;">
+                                    <div style="font-size:14px;font-weight:900;color:#fff;letter-spacing:0.5px;">Aliens <span style="font-size:8px;color:#bf5af2;background:rgba(191,90,242,0.2);padding:2px 6px;border-radius:8px;margin-left:4px;">FRI 6PM IST</span></div>
+                                    <div style="font-size:10px;color:var(--text-muted);">Outsiders hidden among the squad — mafia game</div>
+                                </div>
+                                <button onclick="showAliensHowToPlay()" style="background:rgba(191,90,242,0.15);border:1px solid #bf5af255;border-radius:14px;padding:5px 12px;color:#bf5af2;font-size:9px;font-weight:800;cursor:pointer;letter-spacing:0.5px;white-space:nowrap;">📖 How to Play</button>
+                            </div>
+                            <div id="aliensContent"></div>
+                        </div>
+
+                        <div id="aliensDivider" style="border-top:1px solid var(--border-subtle);margin-bottom:20px;"></div>
+
+                        <!-- ─── GAME 3: ARARIYO CODE ─── -->
+                        <div style="padding-bottom:20px;">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                                <span style="font-size:22px;">🔐</span>
+                                <div>
+                                    <div style="font-size:14px;font-weight:900;color:#fff;letter-spacing:0.5px;">Just Dive</div>
+                                    <div style="font-size:10px;color:var(--text-muted);">Decode the BTS song from its initials — one shot per day</div>
+                                </div>
+                            </div>
+                            <div style="padding:10px 14px;margin-bottom:10px;border-left:3px solid #34c759;background:rgba(52,199,89,0.05);border-radius:0 6px 6px 0;">
+                                <div style="font-size:9px;font-weight:800;color:#34c759;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;">How to Play</div>
+                                <div style="font-size:10px;color:var(--text-muted);line-height:1.7;">A BTS song title is scrambled into just its initials — like <strong style="color:#fff;">S D</strong> for <em>Spring Day</em>. You get <strong style="color:#34c759;">one chance</strong> to type the full song title. Get it right and earn <strong style="color:#34c759;">+8 XP</strong>. Runs daily — a new song drops every midnight KST! 🎵</div>
+                            </div>
+                            <div id="cipherContent"></div>
+                        </div>
+
+                        <div style="border-top:1px solid var(--border-subtle);margin-bottom:20px;"></div>
+
+                        <!-- ─── GAME 6: TWO ROADS ─── -->
+                        <div style="padding-bottom:20px;">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                                <span style="font-size:22px;">⚖️</span>
+                                <div>
+                                    <div style="font-size:14px;font-weight:900;color:#fff;letter-spacing:0.5px;">Still Spinning</div>
+                                    <div style="font-size:10px;color:var(--text-muted);">Pick a side — the carousel never stops</div>
+                                </div>
+                            </div>
+                            <div style="padding:10px 14px;margin-bottom:10px;border-left:3px solid #ff9f0a;background:rgba(255,159,10,0.05);border-radius:0 6px 6px 0;">
+                                <div style="font-size:9px;font-weight:800;color:#ff9f0a;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;">How to Play</div>
+                                <div style="font-size:10px;color:var(--text-muted);line-height:1.7;">A spicy BTS dilemma drops every day — two options, pick one. There's no right answer! After you vote, see immediately how everyone else in the app voted. The real fun starts in the GC once everyone has picked a side 👀</div>
+                            </div>
+                            <div id="balanceContent"></div>
+                        </div>
+
+                        <div style="border-top:1px solid var(--border-subtle);margin-bottom:20px;"></div>
+
+                        <!-- ─── GAME 7: STAR RELAY ─── -->
+                        <div style="padding-bottom:20px;">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                                <span style="font-size:22px;">🔗</span>
+                                <div>
+                                    <div style="font-size:14px;font-weight:900;color:#fff;letter-spacing:0.5px;">Eat This Life</div>
+                                    <div style="font-size:10px;color:var(--text-muted);">Instinctive word relay — pass it on, one word per day</div>
+                                </div>
+                            </div>
+                            <div style="padding:10px 14px;margin-bottom:10px;border-left:3px solid #5ac8fa;background:rgba(90,200,250,0.05);border-radius:0 6px 6px 0;">
+                                <div style="font-size:9px;font-weight:800;color:#5ac8fa;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;">How to Play</div>
+                                <div style="font-size:10px;color:var(--text-muted);line-height:1.7;">Your team builds a word chain together — each word must start with the <strong style="color:#fff;">last letter</strong> of the previous word. You get one word per day. Longer chains = more team XP! Coordinate with your squad so no one runs out of ideas 🔗</div>
+                            </div>
+                            <div id="signalContent"></div>
+                        </div>
+
+                        <div style="border-top:1px solid var(--border-subtle);margin-bottom:20px;"></div>
+
+                        <!-- ─── GAME 5: FYA (Rapid Fire) ─── -->
+                        <div style="padding-bottom:20px;">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                                <span style="font-size:22px;">⚡</span>
+                                <div>
+                                    <div style="font-size:14px;font-weight:900;color:#fff;letter-spacing:0.5px;">That's Fire</div>
+                                    <div style="font-size:10px;color:var(--text-muted);">5 BTS questions — 7 seconds each, answer before it burns out</div>
+                                </div>
+                            </div>
+                            <div style="padding:10px 14px;margin-bottom:10px;border-left:3px solid var(--fail);background:rgba(232,58,93,0.05);border-radius:0 6px 6px 0;">
+                                <div style="font-size:9px;font-weight:800;color:var(--fail);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;">How to Play</div>
+                                <div style="font-size:10px;color:var(--text-muted);line-height:1.7;">5 BTS trivia questions back to back. The moment a question appears, a <strong style="color:var(--fail);">7-second countdown</strong> starts. Type your answer and press Enter — or time runs out and you skip it. Results and XP revealed at the end. One round per day, new questions every midnight! ⚡</div>
+                            </div>
+                            <div id="rapidFireContent"></div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- ══ END GAMES ══ -->
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+       PASSWORD MODAL
+       ══════════════════════════════════════════ -->
+    <div id="passwordModal" class="modal-overlay" hidden onclick="if(event.target===this)closePasswordModal()">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <span style="font-weight:800;font-size:0.8125rem;">🔑 Change Password</span>
+                <button class="btn-ghost" onclick="closePasswordModal()"
+                    style="font-size:1.25rem;padding:4px 8px;">×</button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom:12px;">
+                    <label class="label-tag" style="display:block;margin-bottom:4px;">Current Password</label>
+                    <input type="password" id="currentPw" class="input-field">
+                </div>
+                <div style="margin-bottom:12px;">
+                    <label class="label-tag" style="display:block;margin-bottom:4px;">New Password</label>
+                    <input type="password" id="newPw" class="input-field">
+                </div>
+                <div style="margin-bottom:16px;">
+                    <label class="label-tag" style="display:block;margin-bottom:4px;">Confirm New Password</label>
+                    <input type="password" id="confirmNewPw" class="input-field">
+                </div>
+                <button class="btn-red" onclick="changePassword()">Update Password</button>
+                <div id="pwError"
+                    style="text-align:center;font-size:0.6875rem;color:var(--fail);margin-top:8px;min-height:16px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+       FRIENDS WELCOME MODAL
+       Shown once to agents who were hand-picked for the Friends team.
+       ══════════════════════════════════════════ -->
+    <div id="friendsWelcomeModal" class="modal-overlay" hidden style="z-index:9999;">
+      <div class="modal-card" onclick="event.stopPropagation()" style="max-width:380px;width:92%;">
+        <div class="modal-header" style="flex-direction:column;align-items:flex-start;gap:4px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);">
+          <span style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:#7C5CBF;text-transform:uppercase;">Team Update</span>
+          <span style="font-weight:900;font-size:1rem;color:#fff;line-height:1.3;">Welcome to Friends 💜</span>
+        </div>
+        <div class="modal-body" style="padding-top:14px;">
+          <div style="text-align:center;font-size:2rem;margin-bottom:12px;">🤝</div>
+          <p style="font-size:0.75rem;color:var(--text-muted);line-height:1.8;margin-bottom:14px;">
+            Team Muse and Team Layover had a leadership gap and some inactive members, so we decided to combine the active core from both teams into one strong, manageable unit.
+          </p>
+          <p style="font-size:0.75rem;color:var(--text-muted);line-height:1.8;margin-bottom:16px;">
+            We reviewed every member's individual streaming progress — and
+            <strong style="color:#fff;">based on your individual progress, we decided to keep you in Team Friends.</strong>
+            Your XP, badges and stream history from all previous weeks are fully preserved 💜
+          </p>
+          <div style="background:rgba(124,92,191,0.12);border:1px solid rgba(124,92,191,0.3);
+            border-radius:10px;padding:12px 14px;margin-bottom:18px;font-size:0.7rem;
+            color:rgba(255,255,255,0.7);line-height:1.7;">
+            🎵 Team name: <strong style="color:#7C5CBF;">Friends</strong> — a collab between Muse &amp; Layover, just like the Vmin bond.<br>
+            Same game rules, same goals, fresh start together.
+          </div>
+          <a href="https://ig.me/j/Abbw5hoNK0ElIG52/" target="_blank" rel="noopener"
+            style="display:block;width:100%;padding:13px;background:rgba(124,92,191,0.15);
+              border:1px solid rgba(124,92,191,0.4);border-radius:10px;color:#7C5CBF;
+              font-size:0.8125rem;font-weight:900;letter-spacing:1px;cursor:pointer;
+              text-transform:uppercase;text-align:center;text-decoration:none;
+              margin-bottom:10px;box-sizing:border-box;">
+            📲 Join Friends Group Chat
+          </a>
+          <button onclick="dismissFriendsWelcome()"
+            style="width:100%;padding:13px;background:linear-gradient(135deg,#7C5CBF,#4f46e5);border:none;
+              border-radius:10px;color:#fff;font-size:0.8125rem;font-weight:900;letter-spacing:1px;
+              cursor:pointer;text-transform:uppercase;">
+            Let's Go 💜
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- LISTENBRAINZ INTRO MODAL — shown once on login -->
+    <div id="lbIntroModal" class="modal-overlay" hidden style="z-index:9999;">
+      <div class="modal-card" onclick="event.stopPropagation()" style="max-width:380px;width:92%;">
+        <div class="modal-header" style="flex-direction:column;align-items:flex-start;gap:4px;padding-bottom:12px;border-bottom:1px solid rgba(235,116,59,0.2);">
+          <span style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:#eb743b;text-transform:uppercase;">📻 Mission Broadcast</span>
+          <span style="font-weight:900;font-size:1rem;color:#fff;line-height:1.3;">We're Adding ListenBrainz</span>
+        </div>
+        <div class="modal-body" style="padding-top:14px;">
+          <div style="text-align:center;font-size:2rem;margin-bottom:12px;">📻</div>
+          <p style="font-size:0.75rem;color:var(--text-muted);line-height:1.8;margin-bottom:14px;">
+            Many of you asked for a reliable backup for your streams — something community-first. We heard you.
+          </p>
+          <p style="font-size:0.75rem;color:var(--text-muted);line-height:1.8;margin-bottom:14px;">
+            <strong style="color:#fff;">ListenBrainz</strong> is a free, non-profit music tracker. Connect your Spotify once and your streams are recorded automatically — no extra steps.
+          </p>
+          <div style="background:rgba(235,116,59,0.08);border:1px solid rgba(235,116,59,0.25);border-radius:10px;padding:12px 14px;margin-bottom:18px;font-size:0.7rem;color:rgba(255,255,255,0.7);line-height:1.7;">
+            ⏳ <strong style="color:#fff;">First time?</strong> It can take up to <strong style="color:#eb743b;">1 hour</strong> after connecting Spotify for streams to appear. Come back and check later.<br><br>
+            ✅ Your current scrobble setup is <strong style="color:#fff;">completely unaffected</strong> — this is optional.
+          </div>
+          <a href="listenbrainz-guide.html" target="_blank" rel="noopener"
+            style="display:block;width:100%;padding:13px;background:rgba(235,116,59,0.12);
+              border:1px solid rgba(235,116,59,0.35);border-radius:10px;color:#eb743b;
+              font-size:0.8125rem;font-weight:900;letter-spacing:1px;cursor:pointer;
+              text-transform:uppercase;text-align:center;text-decoration:none;
+              margin-bottom:10px;box-sizing:border-box;">
+            📖 Read Setup Guide
+          </a>
+          <button onclick="document.getElementById('lbIntroModal').hidden=true"
+            style="width:100%;padding:13px;background:linear-gradient(135deg,#eb743b,#d45f28);border:none;
+              border-radius:10px;color:#fff;font-size:0.8125rem;font-weight:900;letter-spacing:1px;
+              cursor:pointer;text-transform:uppercase;">
+            Got it 💜
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+       TEAM CHOICE MODAL
+       Shown once to agents whose old team (Muse/Layover) was dissolved.
+       Cannot be dismissed — agent must pick a team.
+       ══════════════════════════════════════════ -->
+    <div id="teamChoiceModal" class="modal-overlay" hidden style="z-index:9999;">
+      <div class="modal-card" onclick="event.stopPropagation()" style="max-width:380px;width:92%;">
+        <div class="modal-header" style="flex-direction:column;align-items:flex-start;gap:4px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);">
+          <span style="font-size:0.65rem;font-weight:800;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase;">Team Update</span>
+          <span style="font-weight:900;font-size:1rem;color:#fff;line-height:1.3;">Choose Your New Team 💜</span>
+        </div>
+        <div class="modal-body" style="padding-top:14px;">
+          <p style="font-size:0.75rem;color:var(--text-muted);line-height:1.8;margin-bottom:16px;">
+            Team Muse and Team Layover have merged into <strong style="color:#7C5CBF;">Friends</strong>
+            — combining the most active members from both teams.<br><br>
+            <strong style="color:#fff;">Friends is now full.</strong>
+            You can join any of the 5 teams below. Your XP, badges and stream history from all previous weeks are fully preserved 💜
+          </p>
+          <div id="teamChoiceDeadline" style="font-size:0.68rem;color:var(--fail);font-weight:700;margin-bottom:16px;"></div>
+          <div id="teamChoiceGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;">
+            <!-- filled by JS -->
+          </div>
+          <button id="teamChoiceConfirmBtn" onclick="confirmTeamChoice()"
+            style="width:100%;padding:13px;background:linear-gradient(135deg,#7C5CBF,#4f46e5);border:none;
+              border-radius:10px;color:#fff;font-size:0.8125rem;font-weight:900;letter-spacing:1px;
+              cursor:pointer;text-transform:uppercase;opacity:0.4;pointer-events:none;"
+            disabled>
+            Confirm Team
+          </button>
+          <div id="teamChoiceError" style="text-align:center;font-size:0.6875rem;color:var(--fail);margin-top:8px;min-height:14px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+       TOAST CONTAINER
+       ══════════════════════════════════════════ -->
+    <div id="toast-container"></div>
+
+    <script src="app.js?v=2026062101"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
+</body>
+
+</html>
